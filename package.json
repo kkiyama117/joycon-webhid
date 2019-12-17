@@ -1,0 +1,23 @@
+{
+  "name": "joycon-webhid",
+  "version": "1.0.0",
+  "description": "",
+  "main": "dist/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/Thiry1/joycon-webhid.git"
+  },
+  "author": "thiry",
+  "license": "WTFPL",
+  "bugs": {
+    "url": "https://github.com/Thiry1/joycon-webhid/issues"
+  },
+  "homepage": "https://github.com/Thiry1/joycon-webhid#readme",
+  "devDependencies": {
+    "typescript": "^3.7.3"
+  }
+}
