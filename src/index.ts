@@ -1,5 +1,3 @@
-export declare const navigator: Navigator & { hid: any };
-
 const delay = async (delayMs: number): Promise<void> =>
   new Promise(resolve => setTimeout(resolve, delayMs));
 
@@ -8,10 +6,13 @@ const outputTarget = document.querySelector("#output");
 class JoyConHID {
   private globalPacketNumber = 0x00; // 0x0 ~ 0xf. see: https://github.com/dekuNukem/Nintendo_Switch_Reverse_Engineering/blob/master/bluetooth_hid_notes.md#output-0x01
 
-  constructor(private joyCon: any) {}
+  constructor(private joyCon: HIDDevice) {}
 
-  async sendCommand(subCommand: number, subCommandArguments: number): void {
-    this.joyCon.sendReport(
+  async sendCommand(
+    subCommand: number,
+    subCommandArguments: number
+  ): Promise<void> {
+    await this.joyCon.sendReport(
       0x01,
       this.createQuery(subCommand, subCommandArguments)
     );
@@ -45,14 +46,15 @@ document.querySelector("#start-button")!.addEventListener("click", async () => {
     throw new Error("unsupported browser");
   }
 
-  const device = await navigator.hid.requestDevice({
+  const devices = await navigator.hid.requestDevice({
     filters: [
       {
-        vendorId: 0x057e,
-        productId: 0x2007 // joy-con R
+        vendorId: 0x057e
+        // productId: 0x2007 // joy-con R
       }
     ]
   });
+  const device = devices[0];
 
   device.addEventListener("inputreport", (event: any) => {
     outputTarget!.innerHTML = event.data;
