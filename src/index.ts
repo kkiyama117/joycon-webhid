@@ -57,7 +57,7 @@ document.querySelector("#start-button")!.addEventListener("click", async () => {
   const device = devices[0];
 
   device.addEventListener("inputreport", (event: HIDInputReportEvent) => {
-    const data = event.device.productId?.toString();
+    const data = JSON.stringify(event.data);
     if (data) {
       outputTarget!.innerHTML = data;
     }
